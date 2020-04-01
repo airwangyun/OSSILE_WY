@@ -1,0 +1,56 @@
+#!/QOpenSys/usr/bin/sh
+export TGTLIB=OSSILE
+if [ ! -e /qsys.lib/ossile.lib ] ; then
+  system "crtlib $TGTLIB"
+fi
+if [[ $0 = /* ]]
+then
+    export WORKDIR=$(dirname $0)
+else
+    export WORKDIR=$(pwd)/$(dirname $0)
+fi
+echo work dir is $WORKDIR
+
+ITEMS=$(cat $WORKDIR/buildlist.txt | grep -v '#' | tr '\n' ' ')
+
+export FAILURE_ITEMS=""
+export SUCCESS_ITEMS=""
+
+for ITEM in $ITEMS
+do
+ cd $WORKDIR/$ITEM && rm -f setup2 && tr -d '\r' < setup > setup2 && chmod +x setup2 && /QOpenSys/usr/bin/sh -c setup2 >> build_log.txt 2>&1
+ rm -f setup2
+ if [ $? -eq 0 ] ; then
+  echo item $ITEM built successfully
+  SUCCESS_ITEMS="$SUCCESS_ITEMS $ITEM"
+ else
+  echo item $ITEM failed to build. See $WORKDIR/$ITEM/build_log.txt for details
+  FAILURE_ITEMS="$FAILURE_ITEMS $ITEM"
+ fi
+done
+rm -f /qsys.lib/$TGTLIB.lib/*.MODULE
+echo " "
+echo "========================================"
+echo " "
+echo " "
+echo "The following has built successfully:"
+for ITEM in $SUCCESS_ITEMS
+do
+ echo "   $ITEM"
+done
+if [ "$FAILURE_ITEMS" == "" ] ; then
+ echo " "
+ echo "No failures"
+ echo " "
+ exit 0
+fi
+
+echo " "
+echo " "
+echo "The following has failed to build:"
+for ITEM in $FAILURE_ITEMS
+do
+ echo "   $ITEM" " (See $WORKDIR/$ITEM/build_log.txt for details)"
+done
+echo " "
+exit 5
