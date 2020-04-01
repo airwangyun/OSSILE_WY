@@ -1,4 +1,5 @@
 #include <stdio.h>                          // standard I/O
+/* this is a test */
 #include <stdlib.h>                         // standard I/O
 #include <string.h>                         // memory and string
 #include <qwcrssts.h>                       // system status collection
