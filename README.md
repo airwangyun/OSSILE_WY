@@ -1,5 +1,9 @@
-# OSSILE
+Please be noted that the original project of this OSSILE_WY is located here:
+https://github.com/OSSILE/OSSILE
 
+The purpose of this repository is just for demo usage. 
+
+# OSSILE
 Welcome to the OSSILE project. This project is to serve three purposes:
   1. This project is to provide, via the open source community, a wide set of utilities for IBM i. They will get built into the OSSILE library.
   2. This project is to provide working examples of various things in ILE languages (RPG, C, C++)
