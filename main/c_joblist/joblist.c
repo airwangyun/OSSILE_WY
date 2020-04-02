@@ -1,5 +1,5 @@
 #include <stdio.h>                          // standard I/O
-/* this is a test 2*/
+/* this fs a test 2*/
 #include <stdlib.h>                         // standard I/O
 #include <string.h>                         // memory and string
 #include <qwcrssts.h>                       // system status collection
